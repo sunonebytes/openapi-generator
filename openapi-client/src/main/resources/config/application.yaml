@@ -1,0 +1,27 @@
+---
+
+server:
+  port: 8090
+
+
+---
+spring:
+  application:
+    name: openapi-client
+  devtools:
+    livereload:
+      port: 35730
+
+---
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+    path: /docs
+
+---
+application:
+  customer-properties-api:
+    base-path: http://localhost:8080/api
+  address-properties-api:
+    base-path: http://localhost:8080/api

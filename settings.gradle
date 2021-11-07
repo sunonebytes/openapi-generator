@@ -1,0 +1,5 @@
+rootProject.name = 'openapi-generator'
+include 'openapi-server'
+include 'openapi-client'
+include 'openapi-spec'
+

@@ -1,0 +1,30 @@
+apply plugin: 'base'
+
+allprojects{
+    repositories {
+        mavenCentral()
+    }
+
+}
+
+subprojects{
+    apply plugin: 'java'
+	ext {
+		 customerOpenApiYaml = "$rootDir/openapi-spec/customer.yaml".toString()
+	}
+
+	afterEvaluate {
+		customerOpenApiYaml = "$rootDir/openapi-spec/customer.yaml".toString()
+	}
+}
+
+
+
+
+
+//def customerOpenApiYaml = "$rootDir/openapi-spec/customer.yaml".toString()
+
+group 'com.smartbytes.openapi.generator'
+version '1.0-SNAPSHOT'
+
+
