@@ -1,0 +1,349 @@
+{
+	"info": {
+		"_postman_id": "fe3511a5-ffa8-4b80-adad-fb48385731d4",
+		"name": "OpenAPI-Generator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Server",
+			"item": [
+				{
+					"name": "OpenAPI-Server-CustomersAPI-GetCustomers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OpenAPI-Server-CustomersAPI-GetCustomerForCustomerNumber",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/customers/23423",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"23423"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OpenAPI-Server-CustomersAPI-CreateCustomer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerName\": \"Viswanath\",\n  \"customerEmail\": \"sunonebytes@example.com\",\n  \"customerPhone\": \"9994445555\",\n  \"dateOfBirth\": \"2001-11-07\",\n  \"customerFees\": 0,\n  \"addresses\": [\n    {\n      \"addressType\": \"Home\",\n      \"addressLine1\": \"#95 Fifth Cross\",\n      \"addressLine2\": \"Main Road\",\n      \"city\": \"Manhattan\",\n      \"zipCode\": \"34543\",\n      \"state\": \"New York\",\n      \"country\": \"US\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OpenAPI-Server-CustomersAPI-UpdateCustomerForCustomerNumber",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerName\": \"Viswanath\",\n  \"customerEmail\": \"sunonebytes@example.com\",\n  \"customerPhone\": \"9994445555\",\n  \"dateOfBirth\": \"2001-11-07\",\n  \"customerFees\": 0,\n  \"addresses\": [\n    {\n      \"addressType\": \"Home\",\n      \"addressLine1\": \"#95 Fifth Cross\",\n      \"addressLine2\": \"Main Road\",\n      \"city\": \"Manhattan\",\n      \"zipCode\": \"34543\",\n      \"state\": \"New York\",\n      \"country\": \"US\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/customers/23423?customerNumber=23432",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"23423"
+							],
+							"query": [
+								{
+									"key": "customerNumber",
+									"value": "23432"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OpenAPI-Server-CustomersAPI-PatchCustomerForCustomerNumber",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customerName\" : \"Viswanath\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/customers/23423",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"23423"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OpenAPI-Server-CustomersAPI-DeleteCustomerForCustomerNumber",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/customers?customerNumber=23423",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "customerNumber",
+									"value": "23423"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "OpenAPI-Client-CustomersAPI-GetCustomers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/v1/customer-client",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"v1",
+								"customer-client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OpenAPI-Client-CustomersAPI-GetCustomerForCustomerNumber",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/v1/customer-client/23423",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"v1",
+								"customer-client",
+								"23423"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OpenAPI-Client-CustomersAPI-CreateCustomer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerName\": \"Viswanath\",\n  \"customerEmail\": \"sunonebytes@example.com\",\n  \"customerPhone\": \"9994445555\",\n  \"dateOfBirth\": \"2001-11-07\",\n  \"customerFees\": 0,\n  \"addresses\": [\n    {\n      \"addressType\": \"Home\",\n      \"addressLine1\": \"#95 Fifth Cross\",\n      \"addressLine2\": \"Main Road\",\n      \"city\": \"Manhattan\",\n      \"zipCode\": \"34543\",\n      \"state\": \"New York\",\n      \"country\": \"US\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8090/v1/customer-client",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"v1",
+								"customer-client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OpenAPI-Client-CustomersAPI-UpdateCustomerForCustomerNumber",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerName\": \"Viswanath\",\n  \"customerEmail\": \"sunonebytes@example.com\",\n  \"customerPhone\": \"9994445555\",\n  \"dateOfBirth\": \"2001-11-07\",\n  \"customerFees\": 0,\n  \"addresses\": [\n    {\n      \"addressType\": \"Home\",\n      \"addressLine1\": \"#95 Fifth Cross\",\n      \"addressLine2\": \"Main Road\",\n      \"city\": \"Manhattan\",\n      \"zipCode\": \"34543\",\n      \"state\": \"New York\",\n      \"country\": \"US\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8090/v1/customer-client/23423",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"v1",
+								"customer-client",
+								"23423"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OpenAPI-Client-CustomersAPI-PatchCustomerForCustomerNumber",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n    \"customerName\" : \"Viswanath\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8090/v1/customer-client/23423",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"v1",
+								"customer-client",
+								"23423"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OpenAPI-Client-CustomersAPI-DeleteCustomerForCustomerNumber",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/v1/customer-client?customerNumber=23423",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"v1",
+								"customer-client"
+							],
+							"query": [
+								{
+									"key": "customerNumber",
+									"value": "23423"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

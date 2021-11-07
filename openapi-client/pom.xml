@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+		xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.sunonebytes.openapi</groupId>
+		<artifactId>openapi-generator</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>openapi-client</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>openapi-client</name>
+	<description>Open API Client</description>
+	<packaging>jar</packaging>
+	<properties>
+		<java.version>11</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- Open API Support Libararies-->
+		<!-- Open API Swagger Annotations currently Open API does not support io.swagger.v3.oas.annotations -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>1.6.3</version>
+		</dependency>
+		<!-- Open API Validation API and Jackson Databind - if Jackson Databind not required use "openApiNullable": false in Generator Config -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.1</version>
+		</dependency>
+		<!-- Open UI -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.5.12</version>
+		</dependency>
+
+		<!-- Open API resttemplate requires JSR305 validation api Guava includes JSR305 library -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>31.0.1-jre</version>
+		</dependency>
+
+		<!-- RestTemplate Patch Method -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>5.3.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/../openapi-spec/customer.yaml</inputSpec>
+							<generatorName>java</generatorName>
+							<library>resttemplate</library>
+							<generateApiTests>true</generateApiTests>
+							<generateModelTests>true</generateModelTests>
+							<enablePostProcessFile>true</enablePostProcessFile>
+							<skipOverwrite>false</skipOverwrite>
+							<configOptions>
+								<basePackage>com.sunonebytes.openapi.client.gen.web</basePackage>
+								<modelPackage>com.sunonebytes.openapi.client.gen.web.model</modelPackage>
+								<apiPackage>com.sunonebytes.openapi.client.gen.web.api</apiPackage>
+								<configPackage>com.sunonebytes.openapi.client.gen.web.config</configPackage>
+								<java8>true</java8>
+								<dateLibrary>java8</dateLibrary>
+								<serializationLibrary>jackson</serializationLibrary>
+								<useBeanValidation>true</useBeanValidation>
+								<interfaceOnly>true</interfaceOnly>
+								<serializeModel>true</serializeModel>
+								<useTags>true</useTags>
+								<openApiNullable>false</openApiNullable>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

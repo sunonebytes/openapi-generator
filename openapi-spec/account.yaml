@@ -1,0 +1,498 @@
+openapi: 3.0.3
+info:
+  title: Customer API
+  description: This is a Customer API provides API functions for Customer Domain
+  termsOfService: https://www.sunonebytes.com/terms
+  license:
+    name: Sunone Bytes
+    url: https://www.sunonebytes.com
+  version: 1.0.0
+  x-audience: internal-private
+  contact:
+    name: Viswanath K
+    url: https://www.sunonebytes.com
+    email: sunonebytes@example.com
+servers:
+  - url: '{protocol}://{api-server-environment}/{basepath}/{api-version}'
+    description: List of Servers
+    variables:
+      protocol:
+        default: http
+        enum:
+          - http
+          - https
+      api-server-environment:
+        default: localhost:8080
+        enum:
+          - dev-server
+          - uat-server
+          - prod-server
+      basepath:
+        default: api
+        enum:
+          - rest
+          - api
+      api-version:
+        default: v1
+        enum:
+          - v1
+          - v2
+
+paths:
+  /ping:
+    get:
+      summary: Ping API for Health
+      description: The Ping API provides API Health
+      tags:
+        - Ping
+      operationId: ping
+      responses:
+        '200':
+          description: OK
+  /customers:
+    post:
+      summary: Creates New Customer
+      description: Create New Customer Domain
+      tags:
+        - Customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          description: CREATED
+    get:
+      summary: Retrieve all Customers.
+      description: Get All Customer
+      tags:
+        - Customer
+      operationId: getCustomers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCustomersResponse'
+    delete:
+      summary: Delete Customer for Customer Number
+      description: Delete Customer
+      tags:
+        - Customer
+      operationId: deleteCustomer
+      parameters:
+        - name: customerNumber
+          schema:
+            type: integer
+            format: int32
+          description: Customer Number
+          in: query
+          required: true
+      responses:
+        '204':
+          description: NO CONTENT - DELETED
+
+  /customers/{customerNumber}:
+    get:
+      summary: Get Customer for provided Customer Number
+      description: Get Customer for provided Customer Number
+      tags:
+        - Customer
+      operationId: getCustomer
+      parameters:
+        - name: customerNumber
+          schema:
+            type: integer
+            format: int32
+          description: Customer Number
+          in: path
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+    put:
+      summary: Get Customer for provided Customer Number
+      description: Get Customer for provided Customer Number
+      tags:
+        - Customer
+      operationId: getCustomer
+      parameters:
+        - name: customerNumber
+          schema:
+            type: integer
+            format: int32
+          description: Customer Number
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '204':
+          description: NO CONTENT - UPDATED
+    patch:
+      summary: Get Customer for provided Customer Number
+      description: Get Customer for provided Customer Number
+      tags:
+        - Customer
+      operationId: getCustomer
+      parameters:
+        - name: customerNumber
+          schema:
+            type: integer
+            format: int32
+          description: Customer Number
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerNamePatchRequest'
+      responses:
+        '204':
+          description: NO CONTENT - UPDATED
+  /address:
+    post:
+      summary: Creates New Address
+      description: Create Address for Customer
+      tags:
+        - Address
+      operationId: createAddress
+      parameters:
+        - name: customerNumber
+          schema:
+            type: integer
+            format: int32
+          description: Customer Number
+          in: query
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+      responses:
+        '201':
+          description: CREATED
+    get:
+      summary: Creates New Address
+      description: Create Address for Customer
+      tags:
+        - Address
+      operationId: createAddress
+      parameters:
+        - name: customerNumber
+          schema:
+            type: integer
+            format: int32
+          description: Customer Number
+          in: query
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAddressesResponse'
+    delete:
+      summary: Creates New Address
+      description: Create Address for Customer
+      tags:
+        - Address
+      operationId: createAddress
+      parameters:
+        - name: customerNumber
+          schema:
+            type: integer
+            format: int32
+          description: Customer Number
+          in: query
+          required: true
+        - name: addressesId
+          schema:
+            type: string
+          description: Address Id
+          in: query
+          required: true
+      responses:
+        '204':
+          description: NO CONTENT - UPDATED
+  /address/{customerNumber}/{addressesId}:
+    put:
+      summary: Creates New Address
+      description: Create Address for Customer
+      tags:
+        - Address
+      operationId: createAddress
+      parameters:
+        - name: customerNumber
+          schema:
+            type: integer
+            format: int32
+          description: Customer Number
+          in: query
+          required: true
+        - name: addressesId
+          schema:
+            type: string
+          description: Address Id
+          in: query
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+      responses:
+        '204':
+          description: NO CONTENT - UPDATED
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        id:
+          description: Unique Id for Customer
+          type: integer
+          format: int64
+          readOnly: true
+        customerNumber:
+          description: Account Number
+          type: integer
+          format: int32
+          readOnly: true
+        customerName:
+          description: Name of the Customer
+          type: string
+          minLength: 3
+          maximum: 100
+          nullable: false
+        customerEmail:
+          description: Customer email
+          type: string
+          format: email
+          pattern: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+          nullable: true
+        customerPhone:
+          description: Customer Phone
+          type: string
+          pattern: ^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$
+          nullable: false
+        dateOfBirth:
+          description: Customer Date of Birth
+          type: string
+          pattern: /([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/
+          format: date
+        createdDate:
+          description: Customer Created Date
+          type: string
+          format: date-time
+          readOnly: true
+        customerFees:
+          description: Customer Fees
+          type: number
+          format: double
+          nullable: true
+        status:
+          description: Customer status
+          type: boolean
+          readOnly: true
+        addresses:
+          description: Customer addresses
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+      required:
+        - customerName
+        - customerEmail
+        - dateOfBirth
+      example:
+        id: 123213
+        customerNumber: 345843983
+        customerName: "John Smith"
+        customerEmail: "john@example.com"
+        customerPhone: "898 454 9999"
+        dateOfBirth: "2001-02-01"
+        createdDate: "2021-01-01T17:35:28Z"
+        customerFees: 20.00
+        status: true
+        addresses: [
+          {
+            "id": 345345234,
+            "addressType": "Home",
+            "addressLine1": "58, Main Road",
+            "addressLine2": "Mart Avenue",
+            "city": "Garden City",
+            "zipCode": "23452",
+            "state": "New York",
+            "country": "US",
+          },
+          {
+            "id": 3453452456,
+            "addressType": "Work",
+            "addressLine1": "58, 7th Cross",
+            "addressLine2": "Office Building",
+            "city": "Manhattan",
+            "zipCode": "23423",
+            "state": "New York",
+            "country": "US",
+
+          }
+        ]
+    Address:
+      type: object
+      properties:
+        id:
+          description: Address Id
+          type: integer
+          format: int64
+        addressType:
+          description: Type of Address (Business or Home)
+        addressLine1:
+          description: Address Line 1
+          type: string
+        addressLine2:
+          description: Address Line 2
+        city:
+          description: City Name
+          type: string
+        zipCode:
+          description: Zip Code
+          type: string
+          minLength: 5
+          maxLength: 10
+        state:
+          description: State Information
+          type: string
+        country:
+          description: Country Information
+          type: string
+      required:
+        - addressType
+        - addressLine1
+        - city
+        - zipCode
+        - state
+        - country
+      example:
+        id: 34562233
+        addressType: Home
+        addressLine1: 58, Main Road
+        addressLine2: Mart Avenue
+        city: Garden City
+        zipCode: 23452
+        state: New York
+        country: US
+    CustomerNamePatchRequest:
+      type: object
+      properties:
+        customerNumber:
+          description: Account Number
+          type: integer
+          format: int32
+          readOnly: true
+        customerName:
+          description: Name of the Customer
+          type: string
+          minLength: 3
+          maximum: 100
+          nullable: false
+      required:
+        - customerNumber
+        - customerName
+      example:
+        customerNumber: 345843983
+        customerName: "Peter Smith"
+    GetCustomersResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+      example: [
+        {
+          "id": 123213,
+          "customerNumber": 345843983,
+          "customerName": "John Smith",
+          "customerEmail": "john@example.com",
+          "customerPhone": "898 454 9999",
+          "dateOfBirth": "2001-02-01",
+          "createdDate": "2021-01-01T17:35:28Z",
+          "customerFees": 20.00,
+          "status": true,
+          "addresses": [
+            {
+              "id": 345345234,
+              "addressType": "Home",
+              "addressLine1": "58, Main Road",
+              "addressLine2": "Mart Avenue",
+              "city": "Garden City",
+              "zipCode": "23452",
+              "state": "New York",
+              "country": "US",
+            },
+            {
+              "id": 3453452456,
+              "addressType": "Work",
+              "addressLine1": "58, 7th Cross",
+              "addressLine2": "Office Building",
+              "city": "Manhattan",
+              "zipCode": "23423",
+              "state": "New York",
+              "country": "US",
+
+            }
+          ]
+        }
+      ]
+    GetAddressesResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+      example: [
+        {
+              "id": 345345234,
+              "addressType": "Home",
+              "addressLine1": "58, Main Road",
+              "addressLine2": "Mart Avenue",
+              "city": "Garden City",
+              "zipCode": "23452",
+              "state": "New York",
+              "country": "US",
+            },
+            {
+              "id": 3453452456,
+              "addressType": "Work",
+              "addressLine1": "58, 7th Cross",
+              "addressLine2": "Office Building",
+              "city": "Manhattan",
+              "zipCode": "23423",
+              "state": "New York",
+              "country": "US",
+
+            }
+      ]

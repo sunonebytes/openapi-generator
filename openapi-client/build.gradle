@@ -1,0 +1,97 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.6'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+	//Open API Generator Gradle Plugin
+	id "org.openapi.generator" version "5.3.0"
+}
+
+group = 'com.smartbytes.openapi.client'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//Open API Validation API and Jackson Databind - if Json Nullable not required use "openApiNullable": false in Generator Config
+	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+	implementation group: 'org.openapitools', name: 'jackson-databind-nullable', version: '0.2.1'
+	//Open API resttemplate requires JSR305 validation api Guava includes JSR305 library
+	implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
+	//Open API UI
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.12'
+	//For Patch Method - RestTemplate requries
+	implementation 'org.apache.httpcomponents:httpclient'
+
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	//Open API Swagger Annotations
+	//annotationProcessor group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.1.11'
+	annotationProcessor "io.swagger:swagger-annotations:1.6.3"
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+//ext.set(customerOpenApiYaml,"$rootDir/../openapi-spec/customer.yaml".toString())
+
+def customerOpenApiYaml = "$rootDir/../openapi-spec/customer.yaml".toString()
+
+task buildCustomerApiClientCode(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+	inputSpec = customerOpenApiYaml
+	generatorName = "java"
+	library = "resttemplate"
+	outputDir = "$buildDir/generated".toString()
+	groupId = "$project.group"
+	id = "$project.name-java-client"
+	version = "$project.version"
+	generateApiTests = true
+	generateModelTests = true
+	enablePostProcessFile = true
+	skipOverwrite = false
+	enablePostProcessFile = true
+	skipOverwrite = false
+	configOptions = [
+			basePackage 		: "com.sunonebytes.openapi.client.gen.web",
+			apiPackage 			: "com.sunonebytes.openapi.client.gen.web.api",
+			modelPackage 		: "com.sunonebytes.openapi.client.gen.web.model",
+			configPackage       : "com.sunonebytes.openapi.client.gen.config",
+			java8               : "true",
+			dateLibrary         : "java8",
+			serializationLibrary: "jackson",
+			useBeanValidation   : "true",
+			interfaceOnly       : "true",
+			serializableModel   : "true",
+			useTags             : "true",
+			openApiNullable 	: "false"
+	]
+}
+
+
+// code will be generated during compilation
+compileJava.dependsOn(buildCustomerApiClientCode)
+
+
+// attach the generated folder as source for this project
+sourceSets {
+	main {
+		java {
+			srcDir "$buildDir/generated/src/main/java"
+		}
+	}
+}
+
+test {
+    useJUnitPlatform()
+}
