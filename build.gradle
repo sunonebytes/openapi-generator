@@ -24,7 +24,7 @@ subprojects{
 
 //def customerOpenApiYaml = "$rootDir/openapi-spec/customer.yaml".toString()
 
-group 'com.smartbytes.openapi.generator'
+group 'com.sunonebytes.openapi.generator'
 version '1.0-SNAPSHOT'
 
 
